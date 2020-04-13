@@ -1,8 +1,44 @@
 import React, { Component } from 'react';
 import './App.css';
+import ValidationComponent from './ValidationComponent/ValidationComponent'
+import CharComponent from './CharComponent/CharComponent'
 
 class App extends Component {
+
+  state = {
+    inputLength : 0,
+    inputValue : ''
+  }
+
+  inputChangeHandler = (event) => {
+    this.setState({
+      inputLength : event.target.value.length,
+      inputValue : event.target.value
+    })
+  }
+
+  characterDeleteHandler = (event,index) => {
+    let inputvalue = this.state.inputValue.split('');
+    inputvalue.splice(index,1)
+
+    // console.log('index value : '+index)
+    // console.log('copied inputvalue : '+inputvalue)
+    // console.log('state inputvalue : '+this.state.inputValue)
+
+    this.setState({
+      inputLength : inputvalue.join('').length,
+      inputValue : inputvalue.join('')
+    })
+
+
+  }
+
   render() {
+    let charArray = this.state.inputValue.split('').map( (character,index) => {
+        return <CharComponent character ={character} key={index} deletefunction={ this.characterDeleteHandler.bind(this,Event,index) }/>
+      }
+      )
+    
     return (
       <div className="App">
         <ol>
@@ -14,6 +50,10 @@ class App extends Component {
           <li>When you click a CharComponent, it should be removed from the entered text.</li>
         </ol>
         <p>Hint: Keep in mind that JavaScript strings are basically arrays!</p>
+        <input onChange={this.inputChangeHandler}  value={this.state.inputValue}></input>
+        <p>The lenght of the input : {this.state.inputLength}</p>
+        <ValidationComponent inputLength={this.state.inputLength}/>
+        {charArray}        
       </div>
     );
   }
