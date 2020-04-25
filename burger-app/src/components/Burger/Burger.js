@@ -9,24 +9,23 @@ const burger =(props) => {
 
     function transformIngredients(ingredients) {
         let finalIngredients = [];
-        for (let ingredientName in ingredients) {
-            for (let i = 1; i <= ingredients[ingredientName] ;i++) {
-                finalIngredients.push(<BurgerIngredient type={ingredientName} key={ingredientName+i}></BurgerIngredient>)
+        for (let ingredient in ingredients) {
+            for (let i = 1; i <= ingredients[ingredient] ;i++) {
+                finalIngredients.push(<BurgerIngredient type={ingredient} key={ingredient+i}></BurgerIngredient>)
             }
         }
         if (finalIngredients.length === 0) {
-            return <p>Please add ingredients</p>
+            return <p>Please start adding ingredients!</p>
         }
         return finalIngredients;
     }
 
-    return(
-        <div className={classes.Burger}>
-            <BurgerIngredient type="bread-top"></BurgerIngredient>
-            {transformIngredients(props.ingredients)}
-            <BurgerIngredient type="bread-bottom"></BurgerIngredient>
-        </div>
-        
+    return (
+      <div className={classes.Burger}>
+        <BurgerIngredient type="BreadTop"></BurgerIngredient>
+        {transformIngredients(props.ingredients)}
+        <BurgerIngredient type="BreadBottom"></BurgerIngredient>
+      </div>
     );
 }
 
